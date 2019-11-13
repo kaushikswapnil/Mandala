@@ -70,6 +70,11 @@ class SimpleShape extends Shape
 
 class RectNode extends SimpleShape
 {
+   RectNode(float squareSide, PVector fillColor, PVector strokeColor)
+   {
+      super(squareSide, squareSide, fillColor, strokeColor);       
+   }
+   
    RectNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
    {
       super(shapeWidth, shapeHeight, fillColor, strokeColor);       
