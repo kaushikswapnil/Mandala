@@ -34,12 +34,12 @@ void GenerateMandala()
   
   ArrayList<IEffect> effects = new ArrayList<IEffect>();
   effects.add(new RotateEffect(TWO_PI*2, 800));
-  effects.add(new PulseScaleEffect(3, 80));
+  //effects.add(new PulseScaleEffect(3, 80));
   
   effects.get(0).SetLoopable(true);
-  effects.get(1).SetLoopable(true);
+  //effects.get(1).SetLoopable(true);
   
-  Shape sqNode = new SquareNode(50, 50, true, new PVector(110, 130, 150), true, new PVector(150, 180, 210), effects);
+  Shape sqNode = new RectNode(15, 15, true, new PVector(110, 130, 150), true, new PVector(150, 180, 210), effects);
   Pattern p1 = new Pattern(sqNode, p.m_OuterRadius, new PVector(0, 0, 80), new PVector(250, 255, 255));
   g_Mandala.add(p1);
   

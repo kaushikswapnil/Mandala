@@ -113,8 +113,8 @@ class Pattern extends IGraphicNode
    {
       m_Shapes = new ArrayList<Shape>();
       
-      float outerRadiusPerimiter = 2 * PI * (m_OuterRadius - m_BorderSize);
-      int numShapes = (int)Math.floor(outerRadiusPerimiter/nodePrototype.GetFlatDimension());
+      float innerRadiusPerimiter = 2 * PI * (m_InnerRadius - m_BorderSize);
+      int numShapes = (int)Math.floor(innerRadiusPerimiter/nodePrototype.GetFlatDimension());
       
       float shapeCenterCircleRadius = m_Scale*(m_InnerRadius + m_OuterRadius)/2;
       for (int shapeIter = 0; shapeIter < numShapes; ++shapeIter)

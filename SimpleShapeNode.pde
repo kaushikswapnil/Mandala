@@ -68,14 +68,14 @@ class SimpleShape extends Shape
    }
 }
 
-class SquareNode extends SimpleShape
+class RectNode extends SimpleShape
 {
-   SquareNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
+   RectNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
    {
       super(shapeWidth, shapeHeight, fillColor, strokeColor);       
    }
    
-   SquareNode(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
+   RectNode(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
    {
       super(shapeWidth, shapeHeight, fill, fillColor, stroke, strokeColor, effects);       
    }
@@ -91,7 +91,7 @@ class SquareNode extends SimpleShape
    
    Shape Copy()
    {
-      Shape node = new SquareNode(m_Width, m_Height, m_Fill, m_FillColor, m_Stroke, m_StrokeColor, m_Effects);
+      Shape node = new RectNode(m_Width, m_Height, m_Fill, m_FillColor, m_Stroke, m_StrokeColor, m_Effects);
       return node;
    }
    
