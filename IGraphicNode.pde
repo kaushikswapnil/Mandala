@@ -41,7 +41,14 @@ class IGraphicNode
          
          if (effect.IsComplete())
          {
-             m_Effects.remove(iter);
+             if (effect.IsLoopable())
+             {
+                effect.Reprime(); 
+             }
+             else
+             {
+                m_Effects.remove(iter);
+             }               
          }
       }
     }

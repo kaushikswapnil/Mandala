@@ -1,17 +1,20 @@
 class IEffect
 {
    int m_StartFrame, m_EndFrame, m_FrameDuration;
+   boolean m_IsLoopable;
    
    IEffect()
    {
       m_FrameDuration = MAX_INT; 
       m_StartFrame = m_EndFrame = 0;
+      m_IsLoopable = false;
    }
    
    IEffect(int frameDuration)
    {
       m_FrameDuration = frameDuration; 
       m_StartFrame = m_EndFrame = 0;
+      m_IsLoopable = false;
    }
   
    boolean IsComplete()
@@ -30,9 +33,25 @@ class IEffect
       m_EndFrame = m_StartFrame + m_FrameDuration;
    }
    
+   void Reprime()
+   {
+      m_StartFrame = frameCount + 1;
+      m_EndFrame = m_StartFrame + m_FrameDuration;
+   }
+
    boolean IsStarted()
    {
       return m_StartFrame != 0; 
+   }
+   
+   boolean IsLoopable()
+   {
+      return m_IsLoopable; 
+   }
+   
+   void SetLoopable(boolean value)
+   {
+      m_IsLoopable = value; 
    }
    
    void Apply(IGraphicNode node)
@@ -132,4 +151,78 @@ class RotateEffect extends IEffect
          shape.m_Position = PVector.add(relPos, g_Center);
      }
    }
+}
+
+class PulseScaleEffect extends ScaleEffect
+{
+  int m_MidFrame;
+  PulseScaleEffect(float highPulseScale, int frameDuration)
+  {
+     super(highPulseScale, frameDuration);      
+  }
+  
+  void Start()
+  {
+     super.Start();
+     m_MidFrame = (m_StartFrame + m_EndFrame)/2;
+  }
+  
+  void Reprime()
+  {
+     super.Reprime();
+     m_MidFrame = (m_StartFrame + m_EndFrame)/2;
+  }
+  
+  float GetInterpolatedScale()
+  {
+     float a, b;
+     int frameMin;
+     if (frameCount <= m_MidFrame)
+     {
+        a = m_InitialScale;
+        b = m_FinalScale;
+        frameMin = m_StartFrame;
+     }
+     else
+     {
+        a = m_FinalScale;
+        b = m_InitialScale;
+        frameMin = m_MidFrame;
+     }
+     
+     int frameDur = m_FrameDuration/2;
+     
+     float interpolatedScale = a + ((b - a) * (frameCount - frameMin) / frameDur);
+     return interpolatedScale;
+  }
+  
+   void Apply(IGraphicNode node)
+   {
+     if (m_InitialScale == MAX_FLOAT)
+     {
+        m_InitialScale = node.m_Scale;  
+     }
+     
+     node.m_Scale = GetInterpolatedScale();
+   }
+   
+   void Apply(Shape node)
+   {
+     if (m_InitialScale == MAX_FLOAT)
+     {
+        m_InitialScale = node.m_Scale;  
+     }
+     
+     node.m_Scale = GetInterpolatedScale();
+   }
+   
+   void Apply(Pattern pattern)
+   {
+     if (m_InitialScale == MAX_FLOAT)
+     {
+        m_InitialScale = pattern.m_Scale;  
+     }
+     
+     pattern.m_Scale = GetInterpolatedScale();
+   } 
 }
