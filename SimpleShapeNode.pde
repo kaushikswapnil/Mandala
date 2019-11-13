@@ -86,7 +86,7 @@ class SquareNode extends SimpleShape
       rotate(m_Angle);
       
       rectMode(CENTER);
-      rect(0, 0, m_Width, m_Height);
+      rect(0, 0, m_Width*m_Scale, m_Height*m_Scale);
    }
    
    Shape Copy()

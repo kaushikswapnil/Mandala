@@ -70,7 +70,7 @@ class Pattern extends IGraphicNode
    {
       noStroke();
       fill(m_RegionColor.x, m_RegionColor.y, m_RegionColor.z);
-      float outerDiameter = 2*m_OuterRadius;
+      float outerDiameter = 2*m_OuterRadius*m_Scale;
       ellipse(m_Center.x, m_Center.y, outerDiameter, outerDiameter);
    }
    
@@ -87,9 +87,9 @@ class Pattern extends IGraphicNode
       noFill();
       strokeWeight(m_BorderSize);
       stroke(m_BorderColor.x, m_BorderColor.y, m_BorderColor.z);
-      float outerDiameter = 2*m_OuterRadius;
+      float outerDiameter = 2*m_OuterRadius*m_Scale;
       float oBorderDiameter = outerDiameter - m_BorderSize;
-      float iBorderDiameter = (2*m_InnerRadius) + m_BorderSize;
+      float iBorderDiameter = (2*m_InnerRadius*m_Scale) + m_BorderSize;
       ellipse(m_Center.x, m_Center.y, oBorderDiameter, oBorderDiameter);
       ellipse(m_Center.x, m_Center.y, iBorderDiameter, iBorderDiameter);
    }

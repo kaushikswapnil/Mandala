@@ -75,7 +75,7 @@ class ScaleEffect extends IEffect
         m_InitialScale = node.m_Scale;  
      }
      
-     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
+     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame); //<>//
      node.m_Scale = interpolatedScale;
    }
 }
