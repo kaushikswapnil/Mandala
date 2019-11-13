@@ -33,6 +33,16 @@ class SimpleShape extends Shape
       m_StrokeColor = strokeColor;
    }
    
+   SimpleShape(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
+   {
+      super(shapeWidth, shapeHeight, effects);    
+      
+      m_Fill = fill;
+      m_FillColor = fillColor;
+      m_Stroke = stroke;
+      m_StrokeColor = strokeColor;
+   }
+   
    void Display()
    {
        pushMatrix();
@@ -65,6 +75,11 @@ class SquareNode extends SimpleShape
       super(shapeWidth, shapeHeight, fillColor, strokeColor);       
    }
    
+   SquareNode(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
+   {
+      super(shapeWidth, shapeHeight, fill, fillColor, stroke, strokeColor, effects);       
+   }
+   
    void DisplayInternal()
    {
       translate(m_Position.x, m_Position.y);
@@ -76,7 +91,7 @@ class SquareNode extends SimpleShape
    
    Shape Copy()
    {
-      Shape node = new SquareNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
+      Shape node = new SquareNode(m_Width, m_Height, m_Fill, m_FillColor, m_Stroke, m_StrokeColor, m_Effects);
       return node;
    }
    
@@ -106,9 +121,9 @@ class EllipseNode extends SimpleShape
       super(radius*2, radius*2, fillColor, strokeColor);       
    }
   
-   EllipseNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
+   EllipseNode(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
    {
-      super(shapeWidth, shapeHeight, fillColor, strokeColor);       
+      super(shapeWidth, shapeHeight, fill, fillColor, stroke, strokeColor, effects);       
    }
    
    void DisplayInternal()
@@ -118,7 +133,7 @@ class EllipseNode extends SimpleShape
    
    Shape Copy()
    {
-      Shape node = new EllipseNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
+      Shape node = new EllipseNode(m_Width, m_Height, m_Fill, m_FillColor, m_Stroke, m_StrokeColor, m_Effects);
       return node;
    }
    
@@ -147,6 +162,16 @@ class TriangleNode extends SimpleShape
       m_Height = root3 * s /2;
    }
    
+   TriangleNode(float s, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
+   {
+      super(s, s, fill, fillColor, stroke, strokeColor, effects);
+      m_S = s;
+      
+      float root3 = (float)Math.sqrt(3);
+      m_Width = s;
+      m_Height = root3 * s /2;
+   }
+   
    void DisplayInternal()
    {
       translate(m_Position.x, m_Position.y);
@@ -161,7 +186,7 @@ class TriangleNode extends SimpleShape
    
    Shape Copy()
    {
-      Shape node = new TriangleNode(m_S, m_FillColor, m_StrokeColor);
+      Shape node = new TriangleNode(m_S, m_Fill, m_FillColor, m_Stroke, m_StrokeColor, m_Effects);
       return node;
    }
 }

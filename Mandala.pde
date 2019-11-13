@@ -12,11 +12,14 @@ void setup()
   g_Mandala = new ArrayList<Pattern>();
   g_Mandala.add(p);
   
-  Shape sqNode = new SquareNode(50, 50, new PVector(110, 130, 150), new PVector(150, 180, 210));
+  ArrayList<IEffect> rotateEffect = new ArrayList<IEffect>();
+  rotateEffect.add(new RotateEffect(TWO_PI*8, 800));
+  
+  Shape sqNode = new SquareNode(50, 50, true, new PVector(110, 130, 150), true, new PVector(150, 180, 210), rotateEffect);
   Pattern p1 = new Pattern(sqNode, p.m_OuterRadius, new PVector(0, 0, 80), new PVector(250, 255, 255));
   g_Mandala.add(p1);
   
-  Shape trNode = new TriangleNode(30, new PVector(110, 130, 150), new PVector(150, 180, 210));
+  Shape trNode = new TriangleNode(30, true, new PVector(110, 130, 150), true, new PVector(150, 180, 210), rotateEffect);
   Pattern p3 = new Pattern(trNode, p1.m_OuterRadius, new PVector(0, 0, 80), new PVector(250, 255, 255));
   g_Mandala.add(p3);
 }
@@ -27,6 +30,8 @@ void draw()
   
   for(int pIter = g_Mandala.size() - 1; pIter >= 0; --pIter)
   {
-     g_Mandala.get(pIter).Display(); 
+     Pattern p = g_Mandala.get(pIter);
+     p.Update();
+     p.Display(); 
   }
 }

@@ -1,4 +1,4 @@
-class Pattern
+class Pattern extends IGraphicNode
 {
    ArrayList<Shape> m_Shapes;
    
@@ -47,6 +47,16 @@ class Pattern
        m_OuterRadius = innerR + (2*m_BorderSize) + nodePrototype.GetRadialDimension();
        
        GenerateShapes(nodePrototype);
+   }
+   
+   void Update()
+   {
+       super.Update();
+     
+       for (Shape shape : m_Shapes)
+       {
+          shape.Update(); 
+       }
    }
    
    void Display()
@@ -105,5 +115,8 @@ class Pattern
       }
    }
    
-   
+   void ApplyEffect(IEffect effect)
+    {
+      effect.Apply(this);
+    }
 }
