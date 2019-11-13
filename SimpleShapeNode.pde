@@ -150,7 +150,7 @@ class TriangleNode extends SimpleShape
    void DisplayInternal()
    {
       translate(m_Position.x, m_Position.y);
-      rotate(m_Angle);
+      rotate(m_Angle + PI/2);
       beginShape(TRIANGLES);
       float root3 = (float)Math.sqrt(3);
       vertex(0, -m_S/root3);
