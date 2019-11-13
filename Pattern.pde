@@ -1,6 +1,6 @@
 class Pattern
 {
-   ArrayList<Node> m_Nodes;
+   ArrayList<Shape> m_Shapes;
    
    float m_InnerRadius, m_OuterRadius;
    float m_BorderSize;
@@ -10,7 +10,7 @@ class Pattern
    
    PVector m_Center;
    
-   Pattern(Node nodePrototype, float innerR)
+   Pattern(Shape nodePrototype, float innerR)
    {
        m_BorderSize = 5.0f;
        m_BorderColor = new PVector(255, 255, 255);
@@ -20,10 +20,10 @@ class Pattern
        m_InnerRadius = innerR;
        m_OuterRadius = innerR + (2*m_BorderSize) + nodePrototype.GetRadialDimension();
        
-       GenerateNodes(nodePrototype);
+       GenerateShapes(nodePrototype);
    }
    
-   Pattern(Node nodePrototype, float innerR, PVector regionColor)
+   Pattern(Shape nodePrototype, float innerR, PVector regionColor)
    {
        m_BorderSize = 5.0f;
        m_BorderColor = new PVector(255, 255, 255);
@@ -33,10 +33,10 @@ class Pattern
        m_InnerRadius = innerR;
        m_OuterRadius = innerR + (2*m_BorderSize) + nodePrototype.GetRadialDimension();
        
-       GenerateNodes(nodePrototype);
+       GenerateShapes(nodePrototype);
    }
    
-   Pattern(Node nodePrototype, float innerR, PVector regionColor, PVector borderColor)
+   Pattern(Shape nodePrototype, float innerR, PVector regionColor, PVector borderColor)
    {
        m_BorderSize = 5.0f;
        m_BorderColor = borderColor;
@@ -46,7 +46,7 @@ class Pattern
        m_InnerRadius = innerR;
        m_OuterRadius = innerR + (2*m_BorderSize) + nodePrototype.GetRadialDimension();
        
-       GenerateNodes(nodePrototype);
+       GenerateShapes(nodePrototype);
    }
    
    void Display()
@@ -66,7 +66,7 @@ class Pattern
    
    void DrawNodes()
    {
-      for (Node node : m_Nodes)
+      for (Shape node : m_Shapes)
       {
          node.Display(); 
       }
@@ -84,9 +84,9 @@ class Pattern
       ellipse(m_Center.x, m_Center.y, iBorderDiameter, iBorderDiameter);
    }
    
-   void GenerateNodes(Node nodePrototype)
+   void GenerateShapes(Shape nodePrototype)
    {
-      m_Nodes = new ArrayList<Node>();
+      m_Shapes = new ArrayList<Shape>();
       
       float outerRadiusPerimiter = 2 * PI * (m_OuterRadius - m_BorderSize);
       int numShapes = (int)Math.floor(outerRadiusPerimiter/nodePrototype.GetFlatDimension());
@@ -94,14 +94,14 @@ class Pattern
       float shapeCenterCircleRadius = (m_InnerRadius + m_OuterRadius)/2;
       for (int shapeIter = 0; shapeIter < numShapes; ++shapeIter)
       {
-         Node node = nodePrototype.Copy();
+         Shape node = nodePrototype.Copy();
          float theta = (TWO_PI * shapeIter / numShapes);
          PVector positionVector = new PVector(sin(theta), cos(theta));
          PVector position = PVector.add(g_Center, PVector.mult(positionVector, shapeCenterCircleRadius));
          node.m_Position = position;
          node.m_Angle = (PVector.sub(position, g_Center)).heading();
          
-         m_Nodes.add(node);
+         m_Shapes.add(node);
       }
    }
    

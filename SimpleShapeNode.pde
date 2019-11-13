@@ -1,9 +1,9 @@
-class SimpleShapeNode extends Node
+class SimpleShape extends Shape
 {
    boolean m_Fill, m_Stroke;
    PVector m_FillColor, m_StrokeColor;
   
-   SimpleShapeNode(float shapeWidth, float shapeHeight, boolean fill, boolean stroke)
+   SimpleShape(float shapeWidth, float shapeHeight, boolean fill, boolean stroke)
    {
       super(shapeWidth, shapeHeight);    
       
@@ -13,7 +13,7 @@ class SimpleShapeNode extends Node
       m_StrokeColor = new PVector(255, 255, 255);
    }
    
-   SimpleShapeNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
+   SimpleShape(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
    {
       super(shapeWidth, shapeHeight);    
       
@@ -23,7 +23,7 @@ class SimpleShapeNode extends Node
       m_StrokeColor = strokeColor;
    }
    
-   SimpleShapeNode(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor)
+   SimpleShape(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor)
    {
       super(shapeWidth, shapeHeight);    
       
@@ -58,7 +58,7 @@ class SimpleShapeNode extends Node
    }
 }
 
-class SquareNode extends SimpleShapeNode
+class SquareNode extends SimpleShape
 {
    SquareNode(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
    {
@@ -74,9 +74,9 @@ class SquareNode extends SimpleShapeNode
       rect(0, 0, m_Width, m_Height);
    }
    
-   Node Copy()
+   Shape Copy()
    {
-      Node node = new SquareNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
+      Shape node = new SquareNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
       return node;
    }
    
@@ -99,7 +99,7 @@ class SquareNode extends SimpleShapeNode
    }
 }
 
-class EllipseNode extends SimpleShapeNode
+class EllipseNode extends SimpleShape
 {
    EllipseNode(float radius, PVector fillColor, PVector strokeColor)
    {
@@ -116,9 +116,9 @@ class EllipseNode extends SimpleShapeNode
       ellipse(m_Position.x, m_Position.y, m_Width, m_Height);
    }
    
-   Node Copy()
+   Shape Copy()
    {
-      Node node = new EllipseNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
+      Shape node = new EllipseNode(m_Width, m_Height, m_FillColor, m_StrokeColor);
       return node;
    }
    
@@ -133,7 +133,7 @@ class EllipseNode extends SimpleShapeNode
    }
 }
 
-class TriangleNode extends SimpleShapeNode
+class TriangleNode extends SimpleShape
 {
    float m_S;
   
@@ -159,9 +159,9 @@ class TriangleNode extends SimpleShapeNode
       endShape();
    }
    
-   Node Copy()
+   Shape Copy()
    {
-      Node node = new TriangleNode(m_S, m_FillColor, m_StrokeColor);
+      Shape node = new TriangleNode(m_S, m_FillColor, m_StrokeColor);
       return node;
    }
 }

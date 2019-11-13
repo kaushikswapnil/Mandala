@@ -1,4 +1,4 @@
-class Node
+class Shape
 {
    float m_Width, m_Height;
    PVector m_Position;
@@ -6,7 +6,7 @@ class Node
    
    Pattern m_Pattern;
    
-   Node(float shapeWidth, float shapeHeight)
+   Shape(float shapeWidth, float shapeHeight)
    {
       m_Width = shapeWidth;
       m_Height = shapeHeight;
@@ -18,7 +18,7 @@ class Node
       m_Pattern = null;
    }
    
-   Node(float shapeWidth, float shapeHeight, Pattern parentPattern)
+   Shape(float shapeWidth, float shapeHeight, Pattern parentPattern)
    {
       m_Width = shapeWidth;
       m_Height = shapeHeight;
@@ -30,7 +30,7 @@ class Node
       m_Pattern = parentPattern;
    }
    
-   Node(float shapeWidth, float shapeHeight, PVector position, float angle, Pattern parentPattern)
+   Shape(float shapeWidth, float shapeHeight, PVector position, float angle, Pattern parentPattern)
    {
       m_Width = shapeWidth;
       m_Height = shapeHeight;
@@ -44,12 +44,12 @@ class Node
    
    void Display()
    {
- //<>//
+
    }
    
-   Node Copy()
+   Shape Copy()
    {
-      Node node = new Node(m_Width, m_Height, m_Position, m_Angle, m_Pattern); 
+      Shape node = new Shape(m_Width, m_Height, m_Position, m_Angle, m_Pattern); 
       return node;
    }
    
