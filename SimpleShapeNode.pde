@@ -178,9 +178,11 @@ class TriangleNode extends SimpleShape
       rotate(m_Angle + PI/2);
       beginShape(TRIANGLES);
       float root3 = (float)Math.sqrt(3);
-      vertex(0, -m_S/root3);
-      vertex(-m_S/2, (m_S/(2*root3)));
-      vertex(m_S/2, (m_S/(2*root3)));
+      float s = m_S * m_Scale;
+      
+      vertex(0, -s/root3);
+      vertex(-s/2, (s/(2*root3)));
+      vertex(s/2, (s/(2*root3)));
       endShape();
    }
    

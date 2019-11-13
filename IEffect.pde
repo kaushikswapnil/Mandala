@@ -78,6 +78,17 @@ class ScaleEffect extends IEffect
      float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame); //<>//
      node.m_Scale = interpolatedScale;
    }
+   
+   void Apply(Shape node)
+   {
+     if (m_InitialScale == MAX_FLOAT)
+     {
+        m_InitialScale = node.m_Scale;  
+     }
+     
+     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
+     node.m_Scale = interpolatedScale;
+   }
 }
 
 class RotateEffect extends IEffect
@@ -94,5 +105,10 @@ class RotateEffect extends IEffect
    {
      float perFrameAngleIncrement = m_AngleIncrement/m_FrameDuration;
      shape.m_Angle += perFrameAngleIncrement;
+   }
+   
+   void Apply(Pattern pattern)
+   {
+     
    }
 }
