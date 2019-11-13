@@ -60,6 +60,7 @@ class ScaleEffect extends IEffect
 {
    float m_FinalScale;
    float m_InitialScale;
+   boolean m_ApplyToSubShapes;
    
    ScaleEffect(float finalScale, int frameDuration)
    {
@@ -89,6 +90,17 @@ class ScaleEffect extends IEffect
      float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
      node.m_Scale = interpolatedScale;
    }
+   
+   void Apply(Pattern pattern)
+   {
+     if (m_InitialScale == MAX_FLOAT)
+     {
+        m_InitialScale = pattern.m_Scale;  
+     }
+     
+     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
+     pattern.m_Scale = interpolatedScale;
+   }
 }
 
 class RotateEffect extends IEffect
@@ -109,6 +121,15 @@ class RotateEffect extends IEffect
    
    void Apply(Pattern pattern)
    {
-     
+     float perFrameAngleIncrement = m_AngleIncrement/m_FrameDuration;
+     float shapeCenterCircleRadius = (pattern.m_InnerRadius + (pattern.m_OuterRadius*pattern.m_Scale))/2;
+     for (Shape shape : pattern.m_Shapes)
+     {
+         PVector relPos = PVector.sub(shape.m_Position, g_Center);
+         relPos.normalize();
+         relPos.rotate(perFrameAngleIncrement);
+         relPos.mult(shapeCenterCircleRadius);
+         shape.m_Position = PVector.add(relPos, g_Center);
+     }
    }
 }

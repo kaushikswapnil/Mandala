@@ -49,6 +49,21 @@ class Pattern extends IGraphicNode
        GenerateShapes(nodePrototype);
    }
    
+   Pattern(Shape nodePrototype, float innerR, PVector regionColor, PVector borderColor, ArrayList<IEffect> effects)
+   {
+       m_BorderSize = 5.0f;
+       m_BorderColor = borderColor;
+       m_RegionColor = regionColor;
+       m_Center = new PVector(width/2, height/2);
+       
+       m_InnerRadius = innerR;
+       m_OuterRadius = innerR + (2*m_BorderSize) + nodePrototype.GetRadialDimension();
+       
+       GenerateShapes(nodePrototype);
+       
+       m_Effects = effects;
+   }
+   
    void Update()
    {
        super.Update();
@@ -89,7 +104,7 @@ class Pattern extends IGraphicNode
       stroke(m_BorderColor.x, m_BorderColor.y, m_BorderColor.z);
       float outerDiameter = 2*m_OuterRadius*m_Scale;
       float oBorderDiameter = outerDiameter - m_BorderSize;
-      float iBorderDiameter = (2*m_InnerRadius*m_Scale) + m_BorderSize;
+      float iBorderDiameter = (2*m_InnerRadius) + m_BorderSize;
       ellipse(m_Center.x, m_Center.y, oBorderDiameter, oBorderDiameter);
       ellipse(m_Center.x, m_Center.y, iBorderDiameter, iBorderDiameter);
    }
@@ -101,7 +116,7 @@ class Pattern extends IGraphicNode
       float outerRadiusPerimiter = 2 * PI * (m_OuterRadius - m_BorderSize);
       int numShapes = (int)Math.floor(outerRadiusPerimiter/nodePrototype.GetFlatDimension());
       
-      float shapeCenterCircleRadius = (m_InnerRadius + m_OuterRadius)/2;
+      float shapeCenterCircleRadius = m_Scale*(m_InnerRadius + m_OuterRadius)/2;
       for (int shapeIter = 0; shapeIter < numShapes; ++shapeIter)
       {
          Shape node = nodePrototype.Copy();
