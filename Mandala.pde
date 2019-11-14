@@ -26,7 +26,7 @@ void GenerateMandala()
 {
   g_Mandala = new ArrayList<Pattern>();
   
-  SunNode sNode = new SunNode(20);
+  SunNode sNode = new SunNode(30);
   Pattern p = new Pattern(sNode);
   g_Mandala.add(p);
   
