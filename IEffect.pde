@@ -61,17 +61,20 @@ class IEffect
     
    void Apply(Shape shape)
    {
-     
+     IGraphicNode gNode = (IGraphicNode)(shape);
+     Apply(gNode);
    }
    
    void Apply(SimpleShape sShape)
    {
-     
+     IGraphicNode gNode = (IGraphicNode)(sShape);
+     Apply(gNode);
    }
    
    void Apply(Pattern pattern)
    {
-     
+     IGraphicNode gNode = (IGraphicNode)(pattern);
+     Apply(gNode);
    }
 }
 
@@ -97,28 +100,6 @@ class ScaleEffect extends IEffect
      
      float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame); //<>//
      node.m_Scale = interpolatedScale;
-   }
-   
-   void Apply(Shape node)
-   {
-     if (m_InitialScale == MAX_FLOAT)
-     {
-        m_InitialScale = node.m_Scale;  
-     }
-     
-     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
-     node.m_Scale = interpolatedScale;
-   }
-   
-   void Apply(Pattern pattern)
-   {
-     if (m_InitialScale == MAX_FLOAT)
-     {
-        m_InitialScale = pattern.m_Scale;  
-     }
-     
-     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
-     pattern.m_Scale = interpolatedScale;
    }
 }
 
@@ -205,24 +186,4 @@ class PulseScaleEffect extends ScaleEffect
      
      node.m_Scale = GetInterpolatedScale();
    }
-   
-   void Apply(Shape node)
-   {
-     if (m_InitialScale == MAX_FLOAT)
-     {
-        m_InitialScale = node.m_Scale;  
-     }
-     
-     node.m_Scale = GetInterpolatedScale();
-   }
-   
-   void Apply(Pattern pattern)
-   {
-     if (m_InitialScale == MAX_FLOAT)
-     {
-        m_InitialScale = pattern.m_Scale;  
-     }
-     
-     pattern.m_Scale = GetInterpolatedScale();
-   } 
 }
