@@ -76,6 +76,18 @@ class IEffect
      IGraphicNode gNode = (IGraphicNode)(pattern);
      Apply(gNode);
    }
+   
+   void Apply(MoonNode node)
+   {
+     IGraphicNode gNode = (IGraphicNode)(node);
+     Apply(gNode);
+   }
+   
+   void Apply(SunNode node)
+   {
+     IGraphicNode gNode = (IGraphicNode)(node);
+     Apply(gNode);
+   }
 }
 
 class ScaleEffect extends IEffect
@@ -136,6 +148,18 @@ class RotateEffect extends IEffect
          relPos.rotate(perFrameAngleIncrement);
          relPos.mult(shapeCenterCircleRadius);
          shape.m_Position = PVector.add(relPos, g_Center);
+     }
+   }
+   
+   void Apply(MoonNode node)
+   {
+     Shape shape = (Shape)(node);
+     Apply(shape);
+     
+     float perFrameAngleIncrement = 2*m_AngleIncrement/m_FrameDuration;
+     for (MoonNode.Spot spot : node.m_Spots)
+     {
+         spot.m_Position.rotate(perFrameAngleIncrement);
      }
    }
 }

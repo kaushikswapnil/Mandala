@@ -74,4 +74,9 @@ class MoonNode extends EllipseNode
     MoonNode node = new MoonNode(m_Width/2, m_CycleDuration);
     return node;
   }
+  
+  void ApplyEffect(IEffect effect)
+  {
+    effect.Apply(this);
+  }
 }
