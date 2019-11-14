@@ -3,12 +3,14 @@ class MoonNode extends EllipseNode
   class Spot
   {
      PVector m_Position;
+     int m_GreyScale;
      float m_Radius;
      
      Spot(PVector pos, float radius)
      {
         m_Position = pos;
         m_Radius = radius;
+        m_GreyScale = (int)random(140,230);
      }
   }
   
@@ -37,9 +39,10 @@ class MoonNode extends EllipseNode
      translate(m_Position.x, m_Position.y);
      rotate(m_Angle);
      noStroke();
-     fill(0, 0, 0);
+
      for (Spot spot : m_Spots)
      {
+        fill(spot.m_GreyScale, spot.m_GreyScale, spot.m_GreyScale);
         ellipse(spot.m_Position.x, spot.m_Position.y, spot.m_Radius*2, spot.m_Radius*2); 
      }
      
@@ -55,14 +58,20 @@ class MoonNode extends EllipseNode
   {
     m_Spots = new ArrayList<Spot>();
    
-    int numSpots = (int)random(m_Width/8) + 1;
+    int numSpots = (int)random(m_Width/10) + 1;
     
-    for (int iter = 0; iter < numSpots; ++iter) //<>//
+    for (int iter = 0; iter < numSpots; ++iter)
     {
-      float radius = random(0.1f, 0.35f) * m_Width;
+      float radius = random(0.05f, 0.15f) * m_Width;
       PVector randomPos = PVector.random2D();
       randomPos.mult(random(m_Width/2) - radius);
       m_Spots.add(new Spot(randomPos, radius)); 
     }
+  }
+  
+  Shape Copy()
+  {
+    MoonNode node = new MoonNode(m_Width/2, m_CycleDuration);
+    return node;
   }
 }
