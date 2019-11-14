@@ -91,6 +91,12 @@ class ScaleEffect extends IEffect
      m_InitialScale = MAX_FLOAT;
    }
    
+   float GetInterpolatedScale()
+  {
+     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame);
+     return interpolatedScale;
+  }
+   
    void Apply(IGraphicNode node)
    {
      if (m_InitialScale == MAX_FLOAT)
@@ -98,7 +104,7 @@ class ScaleEffect extends IEffect
         m_InitialScale = node.m_Scale;  
      }
      
-     float interpolatedScale = m_InitialScale + ((m_FinalScale - m_InitialScale) * (frameCount - m_StartFrame) / m_EndFrame); //<>//
+     float interpolatedScale = GetInterpolatedScale(); //<>//
      node.m_Scale = interpolatedScale;
    }
 }
@@ -176,14 +182,4 @@ class PulseScaleEffect extends ScaleEffect
      float interpolatedScale = a + ((b - a) * (frameCount - frameMin) / frameDur);
      return interpolatedScale;
   }
-  
-   void Apply(IGraphicNode node)
-   {
-     if (m_InitialScale == MAX_FLOAT)
-     {
-        m_InitialScale = node.m_Scale;  
-     }
-     
-     node.m_Scale = GetInterpolatedScale();
-   }
 }
