@@ -2,6 +2,7 @@ class SimpleShape extends Shape
 {
    boolean m_Fill, m_Stroke;
    PVector m_FillColor, m_StrokeColor;
+   float m_StrokeWeight;
   
    SimpleShape(float shapeWidth, float shapeHeight, boolean fill, boolean stroke)
    {
@@ -11,6 +12,7 @@ class SimpleShape extends Shape
       m_FillColor = new PVector(255, 255, 255);
       m_Stroke = stroke;
       m_StrokeColor = new PVector(255, 255, 255);
+      m_StrokeWeight = 1.0f;
    }
    
    SimpleShape(float shapeWidth, float shapeHeight, PVector fillColor, PVector strokeColor)
@@ -21,6 +23,8 @@ class SimpleShape extends Shape
       m_FillColor = fillColor;
       m_Stroke = true;
       m_StrokeColor = strokeColor;
+      
+      m_StrokeWeight = 1.0f;
    }
    
    SimpleShape(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor)
@@ -31,6 +35,8 @@ class SimpleShape extends Shape
       m_FillColor = fillColor;
       m_Stroke = stroke;
       m_StrokeColor = strokeColor;
+      
+      m_StrokeWeight = 1.0f;
    }
    
    SimpleShape(float shapeWidth, float shapeHeight, boolean fill, PVector fillColor, boolean stroke, PVector strokeColor, ArrayList<IEffect> effects)
@@ -41,6 +47,8 @@ class SimpleShape extends Shape
       m_FillColor = fillColor;
       m_Stroke = stroke;
       m_StrokeColor = strokeColor;
+      
+      m_StrokeWeight = 1.0f;
    }
    
    void Display()
@@ -54,6 +62,7 @@ class SimpleShape extends Shape
        
        if (m_Stroke)
        {
+          strokeWeight(m_StrokeWeight);
           stroke(m_StrokeColor.x, m_StrokeColor.y, m_StrokeColor.z);
        }
        

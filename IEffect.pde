@@ -104,7 +104,7 @@ class ScaleEffect extends IEffect
         m_InitialScale = node.m_Scale;  
      }
      
-     float interpolatedScale = GetInterpolatedScale(); //<>//
+     float interpolatedScale = GetInterpolatedScale();
      node.m_Scale = interpolatedScale;
    }
 }
