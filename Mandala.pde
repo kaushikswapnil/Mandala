@@ -31,7 +31,7 @@ void GenerateMandala()
   p.m_BorderColor = new PVector(255, 103, 0);
   g_Mandala.add(p);
   
-  Shape node = new EllipseNode(20, new PVector(30, 50, 70), new PVector(70, 90, 110));
+  Shape node = new MoonNode(20, 100);
   Pattern p1 = new Pattern(node, p.m_OuterRadius);
   p1.m_Effects.add(new RotateEffect(TWO_PI*2, 800));
   p1.m_Effects.get(0).SetLoopable(true);

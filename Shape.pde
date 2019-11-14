@@ -64,6 +64,16 @@ class Shape extends IGraphicNode
       return node;
    }
    
+   float GetScaledWidth()
+   {
+      return m_Scale * m_Width; 
+   }
+   
+   float GetScaledHeight()
+   {
+      return m_Scale * m_Height; 
+   }
+   
    float GetRadialDimension()
    {
       return Math.max(m_Width, m_Height); 
