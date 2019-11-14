@@ -28,6 +28,7 @@ void GenerateMandala()
   
   SunNode sNode = new SunNode(30);
   Pattern p = new Pattern(sNode);
+  p.m_BorderColor = new PVector(255, 103, 0);
   g_Mandala.add(p);
   
   Shape node = new EllipseNode(20, new PVector(30, 50, 70), new PVector(70, 90, 110));

@@ -44,9 +44,9 @@ class SunNode extends EllipseNode
         }
       }
       
-      if (m_SurfaceParticles.size() < 50)
+      if (random(1) < 0.05)
       {
-         int numToAdd = (int)random(1, 80); 
+         int numToAdd = (int)random(40, 80); 
          for (int iter = 0; iter < numToAdd; ++iter)
          {
             PVector randomPos = PVector.random2D();
