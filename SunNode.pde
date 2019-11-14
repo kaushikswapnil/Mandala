@@ -1,13 +1,71 @@
 class SunNode extends EllipseNode
 {
-   ArrayList<PVector> m_SurfaceParticles;
+   class SurfaceParticle
+   {
+     PVector m_Position;
+     PVector m_Color;
+     float m_Radius;
+     
+     SunNode m_Parent;
+     
+     SurfaceParticle(SunNode parent, PVector position, PVector partColor, float radius)
+     {
+        m_Parent = parent;
+       
+        m_Position = position;
+        m_Color = partColor;
+        m_Radius = radius;        
+     }
+     
+      void Display()
+      {
+        fill(m_Color.x, m_Color.y, m_Color.z);
+        noStroke();
+        float diameter = 2*m_Radius;
+        ellipse(m_Position.x, m_Position.y, diameter, diameter);
+      }
+      
+      void Update()
+      {
+        Age();
+        PhysicsUpdate();
+      }
+      
+      void Age()
+      {
+        if (m_Radius > 1.0f && random(1) < (0.01f/m_Radius))
+        {
+           m_Radius *= random(0.7f, 0.95f); 
+        }
+      }
+      
+      void PhysicsUpdate()
+      {
+         PVector radialVector = PVector.sub(m_Position, m_Parent.m_Position);
+         radialVector.normalize();
+         
+         float driftDist = random(0.005f * m_Parent.m_Width/m_Radius);
+         m_Position.add(PVector.mult(radialVector, driftDist));
+      }
+      
+      boolean IsDead()
+      {
+         float distFromCenter = m_Position.dist(m_Parent.m_Position);
+         float parentRadius = m_Parent.m_Width/2;
+         float maxDist = parentRadius + (random(parentRadius/10, parentRadius/3));
+         
+         return distFromCenter > maxDist;
+      }
+   }
+   
+   ArrayList<SurfaceParticle> m_SurfaceParticles;
    
    SunNode(float radius)
    {
       super(radius, new PVector(255, 103, 0), new PVector(255, 103, 0));
       m_Fill = true;
       m_Stroke = true;
-      m_SurfaceParticles = new ArrayList<PVector>();
+      m_SurfaceParticles = new ArrayList<SurfaceParticle>();
    }
    
    void Update()
@@ -20,11 +78,9 @@ class SunNode extends EllipseNode
    void Display()
    {
       super.Display();
-      for (PVector partPos : m_SurfaceParticles)
+      for (SurfaceParticle part : m_SurfaceParticles)
       {
-         fill(255, 103, 0);
-         noStroke();
-         ellipse(partPos.x, partPos.y, 2, 2);
+         part.Display();
       }
    }
    
@@ -37,35 +93,33 @@ class SunNode extends EllipseNode
    {
       for(int iter = m_SurfaceParticles.size() - 1; iter >=0; --iter)
       {
-        PVector partPos = m_SurfaceParticles.get(iter);
-        if (partPos.dist(m_Position) > ((m_Width/2) + random(5.0f, 9.0f)))
+        if (m_SurfaceParticles.get(iter).IsDead())
         {
            m_SurfaceParticles.remove(iter); 
         }
       }
       
-      if (random(1) < 0.05)
+      if (m_SurfaceParticles.size() < 600 && random(1) < 0.03)
       {
-         int numToAdd = (int)random(40, 80); 
+         int numToAdd = (int)random(30, 100); 
+         float minRadius = m_Width/60;
+         float maxRadius = m_Width/25;
          for (int iter = 0; iter < numToAdd; ++iter)
          {
+            int gColor = (int)random(0, 255);
             PVector randomPos = PVector.random2D();
-            randomPos.mult((m_Width/2));
+            randomPos.mult(random(m_Width/2));
             randomPos.add(m_Position);
-            m_SurfaceParticles.add(randomPos);
+            m_SurfaceParticles.add(new SurfaceParticle(this, randomPos, new PVector(255, gColor, 0), random(minRadius, maxRadius)));
          }
       }
    }
    
    void UpdateSurfaceParticles()
    {
-      for (PVector particle : m_SurfaceParticles)
+      for (SurfaceParticle particle : m_SurfaceParticles)
       {
-         PVector radialVector = PVector.sub(particle, m_Position);
-         radialVector.normalize();
-         
-         float driftDist = random(0.05f);
-         particle.add(PVector.mult(radialVector, driftDist));
+         particle.Update();
       }
    }
 }
