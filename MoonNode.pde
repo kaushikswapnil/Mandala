@@ -34,10 +34,20 @@ class MoonNode extends EllipseNode
   
   void Display()
   {
-     super.Display(); 
+     super.Display();
+     
      pushMatrix();
      translate(m_Position.x, m_Position.y);
      rotate(m_Angle);
+     
+     DisplayMoonSpots();
+     DisplayDarkSide();
+     
+     popMatrix();
+  }
+  
+  void DisplayMoonSpots()
+  {
      noStroke();
 
      for (Spot spot : m_Spots)
@@ -45,13 +55,24 @@ class MoonNode extends EllipseNode
         fill(spot.m_GreyScale, spot.m_GreyScale, spot.m_GreyScale);
         ellipse(spot.m_Position.x, spot.m_Position.y, spot.m_Radius*2, spot.m_Radius*2); 
      }
-     
-     popMatrix();
+  }
+  
+  void DisplayDarkSide()
+  {
+    float phase = GetPhase();
+    
+    
   }
   
   void Update()
   {
     super.Update();
+    
+    if (m_CurCycleStart == MAX_INT || frameCount > m_CurCycleEnd)
+    {
+       m_CurCycleStart = frameCount;
+       m_CurCycleEnd = m_CurCycleStart + m_CycleDuration;
+    }
   }
   
   void GenerateSpots()
@@ -67,6 +88,12 @@ class MoonNode extends EllipseNode
       randomPos.mult(random(m_Width/2) - radius);
       m_Spots.add(new Spot(randomPos, radius)); 
     }
+  }
+  
+  float GetPhase()
+  {
+    float phase = (frameCount - m_CurCycleStart) / (m_CycleDuration);
+    return phase;
   }
   
   Shape Copy()

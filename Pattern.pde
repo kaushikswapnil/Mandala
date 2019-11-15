@@ -146,6 +146,7 @@ class Pattern extends IGraphicNode
            PVector position = PVector.add(g_Center, PVector.mult(positionVector, shapeCenterCircleRadius));
            node.m_Position = position;
            node.m_Angle = (PVector.sub(position, g_Center)).heading();
+           node.m_Pattern = this;
            
            m_Shapes.add(node);
         }
@@ -155,6 +156,7 @@ class Pattern extends IGraphicNode
           Shape node = nodePrototype.Copy();
           node.m_Position = g_Center;
           node.m_Angle = 0.0f;
+          node.m_Pattern = this;
           
           m_Shapes.add(node);
       }
