@@ -148,6 +148,7 @@ class RotateEffect extends IEffect
          relPos.rotate(perFrameAngleIncrement);
          relPos.mult(shapeCenterCircleRadius);
          shape.m_Position = PVector.add(relPos, g_Center);
+         Apply(shape);
      }
    }
    

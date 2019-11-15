@@ -61,7 +61,7 @@ class MoonNode extends EllipseNode
   {
     float phase = GetPhase();
     
-    
+   
   }
   
   void Update()

@@ -6,6 +6,8 @@ class Pattern extends IGraphicNode
    float m_BorderSize;
    PVector m_BorderColor;
    
+   boolean m_Fill, m_OuterBorder, m_InnerBorder;
+   
    PVector m_RegionColor;
    
    Pattern(Shape nodePrototype)
@@ -17,6 +19,8 @@ class Pattern extends IGraphicNode
        InitializeRadii(0.0f, nodePrototype);
        
        GenerateShapes(nodePrototype);
+       
+       m_Fill = m_OuterBorder = m_InnerBorder = true;
    }
    
    Pattern(Shape nodePrototype, float innerR)
@@ -28,6 +32,8 @@ class Pattern extends IGraphicNode
        InitializeRadii(innerR, nodePrototype);
        
        GenerateShapes(nodePrototype);
+       
+       m_Fill = m_OuterBorder = m_InnerBorder = true;
    }
    
    Pattern(Shape nodePrototype, float innerR, PVector regionColor)
@@ -39,6 +45,8 @@ class Pattern extends IGraphicNode
        InitializeRadii(innerR, nodePrototype);
        
        GenerateShapes(nodePrototype);
+       
+       m_Fill = m_OuterBorder = m_InnerBorder = true;
    }
    
    Pattern(Shape nodePrototype, float innerR, PVector regionColor, PVector borderColor)
@@ -50,6 +58,8 @@ class Pattern extends IGraphicNode
        InitializeRadii(innerR, nodePrototype);
        
        GenerateShapes(nodePrototype);
+       
+       m_Fill = m_OuterBorder = m_InnerBorder = true;
    }
    
    Pattern(Shape nodePrototype, float innerR, PVector regionColor, PVector borderColor, ArrayList<IEffect> effects)
@@ -63,6 +73,8 @@ class Pattern extends IGraphicNode
        GenerateShapes(nodePrototype);
        
        m_Effects = effects;
+       
+       m_Fill = m_OuterBorder = m_InnerBorder = true;
    }
    
    void InitializeRadii(float innerR, Shape nodePrototype)

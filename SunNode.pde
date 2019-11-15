@@ -39,7 +39,7 @@ class SunNode extends EllipseNode
       
       void Age()
       {
-        int growthFrameCount = (int)(m_MaxRadius * 5.0f);
+        int growthFrameCount = (int)(m_MaxRadius * 10.0f);
         if (frameCount <= m_SpawnFrame + growthFrameCount)
         {
           m_Radius = map(frameCount, m_SpawnFrame, m_SpawnFrame + growthFrameCount, 0.5f, m_MaxRadius);
@@ -110,12 +110,12 @@ class SunNode extends EllipseNode
         }
       }
       
-      int maxParticles = (int)max(80, 100 * m_Width/40);
+      int maxParticles = (int)max(80, 130 * m_Width/40);
       if (m_SurfaceParticles.size() < maxParticles && random(1) < 0.03)
       {
-         int numToAdd = (int)random(30, 80); 
+         int numToAdd = (int)random(30, 100); 
          float minRadius = m_Width/80;
-         float maxRadius = m_Width/40;
+         float maxRadius = m_Width/35;
          for (int iter = 0; iter < numToAdd; ++iter)
          {
             int gColor = (int)random(0, 255);
