@@ -5,8 +5,11 @@ class SunNode extends EllipseNode
      PVector m_Position;
      PVector m_Color;
      float m_Radius;
+     float m_MaxRadius; 
      
      SunNode m_Parent;
+     
+     int m_SpawnFrame;
      
      SurfaceParticle(SunNode parent, PVector position, PVector partColor, float radius)
      {
@@ -14,7 +17,10 @@ class SunNode extends EllipseNode
        
         m_Position = position;
         m_Color = partColor;
-        m_Radius = radius;        
+        m_Radius = 0.5f;    
+        m_MaxRadius = radius;
+        
+        m_SpawnFrame = frameCount;
      }
      
       void Display()
@@ -33,7 +39,12 @@ class SunNode extends EllipseNode
       
       void Age()
       {
-        if (m_Radius > 1.0f && random(1) < (0.01f/m_Radius))
+        int growthFrameCount = (int)(m_MaxRadius * 5.0f);
+        if (frameCount <= m_SpawnFrame + growthFrameCount)
+        {
+          m_Radius = map(frameCount, m_SpawnFrame, m_SpawnFrame + growthFrameCount, 0.5f, m_MaxRadius);
+        }
+        else if (m_Radius > 1.0f && random(1) < (0.01f/m_Radius))
         {
            m_Radius *= random(0.7f, 0.95f); 
         }
@@ -52,7 +63,7 @@ class SunNode extends EllipseNode
       {
          float distFromCenter = m_Position.dist(m_Parent.m_Position);
          float parentRadius = m_Parent.m_Width/2;
-         float maxDist = parentRadius + (random(parentRadius/10, parentRadius/3));
+         float maxDist = parentRadius + (random(parentRadius/8, parentRadius/2));
          
          return distFromCenter > maxDist;
       }
@@ -99,12 +110,12 @@ class SunNode extends EllipseNode
         }
       }
       
-      int maxParticles = (int)max(50, 80 * m_Width/40);
+      int maxParticles = (int)max(80, 100 * m_Width/40);
       if (m_SurfaceParticles.size() < maxParticles && random(1) < 0.03)
       {
-         int numToAdd = (int)random(30, 100); 
-         float minRadius = m_Width/60;
-         float maxRadius = m_Width/25;
+         int numToAdd = (int)random(30, 80); 
+         float minRadius = m_Width/80;
+         float maxRadius = m_Width/40;
          for (int iter = 0; iter < numToAdd; ++iter)
          {
             int gColor = (int)random(0, 255);
