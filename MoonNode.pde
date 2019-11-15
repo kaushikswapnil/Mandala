@@ -61,7 +61,23 @@ class MoonNode extends EllipseNode
   {
     float phase = GetPhase();
     
-   
+    float parentDiameter = GetScaledWidth();
+    int frameC = frameCount;
+    int ac = frameC*frameC;
+    
+    float xPos = -1.0f * abs(map(phase, 0, 1, -parentDiameter/2, parentDiameter/2));
+    float diameter;
+    if (phase < 0.5f)
+    {
+      diameter = map(phase, 0, 0.5, 0, parentDiameter);
+    }
+    else
+    {
+      diameter = map(phase, 0.5, 1, parentDiameter, 0);
+    }
+    
+    fill(0);
+    ellipse(xPos, 0, diameter, diameter);
   }
   
   void Update()
@@ -92,7 +108,7 @@ class MoonNode extends EllipseNode
   
   float GetPhase()
   {
-    float phase = (frameCount - m_CurCycleStart) / (m_CycleDuration);
+    float phase = (float)(frameCount - m_CurCycleStart) / (m_CycleDuration);
     return phase;
   }
   

@@ -110,7 +110,7 @@ class SunNode extends EllipseNode
         }
       }
       
-      int maxParticles = (int)max(80, 130 * m_Width/40);
+      int maxParticles = (int)max(80, 150 * m_Width/40);
       if (m_SurfaceParticles.size() < maxParticles && random(1) < 0.03)
       {
          int numToAdd = (int)random(30, 100); 
