@@ -52,17 +52,17 @@ class SunNode extends EllipseNode
       
       void PhysicsUpdate()
       {
-         PVector radialVector = PVector.sub(m_Position, m_Parent.m_Position);
+         PVector radialVector = m_Position.copy();
          radialVector.normalize();
          
-         float driftDist = random(0.005f * m_Parent.m_Width/m_Radius);
+         float driftDist = random(0.005f * m_Parent.GetScaledWidth()/m_Radius);
          m_Position.add(PVector.mult(radialVector, driftDist));
       }
       
       boolean IsDead()
       {
-         float distFromCenter = m_Position.dist(m_Parent.m_Position);
-         float parentRadius = m_Parent.m_Width/2;
+         float distFromCenter = m_Position.mag();
+         float parentRadius = m_Parent.GetScaledWidth()/2;
          float maxDist = parentRadius + (random(parentRadius/8, parentRadius/2));
          
          return distFromCenter > maxDist;
@@ -89,10 +89,16 @@ class SunNode extends EllipseNode
    void Display()
    {
       super.Display();
+      
+      pushMatrix();
+      translate(m_Position.x, m_Position.y);
+      rotate(m_Angle);
+      
       for (SurfaceParticle part : m_SurfaceParticles)
       {
          part.Display();
       }
+      popMatrix();
    }
    
    Shape Copy()
@@ -110,18 +116,19 @@ class SunNode extends EllipseNode
         }
       }
       
-      int maxParticles = (int)max(80, 150 * m_Width/40);
+      float scaledDiameter = GetScaledWidth();
+      int maxParticles = (int)max(80, 170 * scaledDiameter/40);
       if (m_SurfaceParticles.size() < maxParticles && random(1) < 0.03)
       {
          int numToAdd = (int)random(30, 100); 
-         float minRadius = m_Width/80;
-         float maxRadius = m_Width/35;
+         float minRadius = scaledDiameter/80;
+         float maxRadius = scaledDiameter/35;
          for (int iter = 0; iter < numToAdd; ++iter)
          {
             int gColor = (int)random(0, 255);
             PVector randomPos = PVector.random2D();
-            randomPos.mult(random(m_Width/2));
-            randomPos.add(m_Position);
+            randomPos.mult(random(scaledDiameter/2));
+            //randomPos.add(m_Position);
             m_SurfaceParticles.add(new SurfaceParticle(this, randomPos, new PVector(255, gColor, 0), random(minRadius, maxRadius)));
          }
       }

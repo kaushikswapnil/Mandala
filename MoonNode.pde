@@ -66,18 +66,20 @@ class MoonNode extends EllipseNode
     int ac = frameC*frameC;
     
     float xPos = -1.0f * abs(map(phase, 0, 1, -parentDiameter/2, parentDiameter/2));
-    float diameter;
+    float maxDiameter = parentDiameter + 1;
+    float darkWidth, darkHeight;
     if (phase < 0.5f)
     {
-      diameter = map(phase, 0, 0.5, 0, parentDiameter);
+      darkWidth = darkHeight = map(phase, 0, 0.5, 0, maxDiameter);
     }
     else
     {
-      diameter = map(phase, 0.5, 1, parentDiameter, 0);
+      darkWidth = map(phase, 0.5, 1, maxDiameter, 0);
+      darkHeight = darkWidth;
     }
     
     fill(0);
-    ellipse(xPos, 0, diameter, diameter);
+    ellipse(xPos, 0, darkWidth, darkHeight);
   }
   
   void Update()
