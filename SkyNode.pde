@@ -1,13 +1,17 @@
-class SkyNode extends EllipseNode
+class SkyNode extends Shape
 {
-  float m_Time;
-  int m_CycleLength, m_CycleStart, m_CycleEnd;
+  int GeneralTime_Dawn = 0;
+  int GeneralTime_Morning = 1;
+  int GeneralTime_Noon = 2;
+  int GeneralTime_Evening = 3;
+  int GeneralTime_Dusk = 4;
+  int GeneralTime_Night = 5;
   
-  class SkyLayer
+  class Layer
   {
      float m_InnerRadius, m_OuterRadius;
      
-     SkyLayer(float innerR, float outerR)
+     Layer(float innerR, float outerR)
      {
         m_InnerRadius = innerR;
         m_OuterRadius = outerR;
@@ -15,14 +19,28 @@ class SkyNode extends EllipseNode
      
      void Display(float time)
      {
+       float diameter = m_OuterRadius *2;
        
+       noStroke();
+       fill(50, 103, 200);
+       
+       ellipse(0, 0, diameter, diameter);
      }
   }
   
-  SkyNode(float radius, float startTime, int cycleLength)
+  float m_InitialTime;
+  int m_CycleLength, m_CycleStart, m_CycleEnd;
+  float m_InnerR, m_OuterR;
+  
+  ArrayList<Layer> m_Layers;
+  
+  SkyNode(float outerR, float startTime, int cycleLength)
   {
-    super(radius, new PVector(), new PVector());
-    m_Time = startTime;
+    super(outerR*2, outerR*2);
+    
+    m_Position = g_Center;
+    
+    m_InitialTime = startTime;
     m_CycleLength = cycleLength;
     
     m_CycleStart = m_CycleEnd = MAX_INT;
@@ -41,6 +59,26 @@ class SkyNode extends EllipseNode
   
   void Display()
   {
+    pushMatrix();
+    translate(m_Position.x, m_Position.y);
+    rotate(m_Angle);
     
+    for (Layer layer : m_Layers)
+    {
+       layer.Display(GetTime()); 
+    }
+    
+    popMatrix();
+  }
+  
+  void GenerateSkyLayers()
+  {
+      
+  }
+  
+  float GetTime()
+  {
+    float time = ((float)(frameCount-m_CycleStart)/m_CycleLength);
+    return time;
   }
 }
