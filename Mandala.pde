@@ -26,7 +26,7 @@ void GenerateMandala()
 {
   g_Mandala = new ArrayList<Pattern>();
   
-  SunNode sNode = new SunNode(60);
+  SunNode sNode = new SunNode(90);
   Pattern p = new Pattern(sNode);
   p.m_BorderColor = new PVector(255, 103, 0);
   g_Mandala.add(p);

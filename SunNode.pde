@@ -63,7 +63,7 @@ class SunNode extends EllipseNode
       {
          float distFromCenter = m_Position.mag();
          float parentRadius = m_Parent.GetScaledWidth()/2;
-         float maxDist = parentRadius + (random(parentRadius/8, parentRadius/2));
+         float maxDist = parentRadius + (random(parentRadius/8, parentRadius/1.7));
          
          return distFromCenter > maxDist;
       }

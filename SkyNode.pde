@@ -97,12 +97,21 @@ class SkyNode extends Shape
        switch(generalTime)
        {
         case 0: //Dawn
-        if (relStrength < 0.5f)
+        if (relStrength < 0.33f)
         {
-          hA = 300/360.0f;
+          hA = 260/360.0f;
+          hB = 330/360.0f;
+          sA = 0.8f;
+          sB = 0.9f;
+          bA = 0.3f;
+          bB = 0.8f;
+        }
+        else if (relStrength < 0.66f)
+        {
+          hA = 330/360.0f;
           hB = 1.0f;
-          sA = 0.33f;
-          sB = 0.5f;
+          sA = 0.9f;
+          sB = 0.1f;
           bA = 0.8f;
           bB = 1.0f;
         }
@@ -110,8 +119,6 @@ class SkyNode extends Shape
         {
           hA = 0.0f;
           hB = 57/360.0f;
-          sA = 0.5f;
-          sB = 1.0f;
         }
         break;
         
@@ -138,22 +145,24 @@ class SkyNode extends Shape
         if (relStrength < 0.5f)
         {
           hA = 257/360.0f;
-          hB = 347/360.0f;
+          hB = 290/360.0f;
+          bA = 1.0;
+          bB = 0.8f;
         }
         else
         {
-          hA = 347/360.0f;
+          hA = 290/360.0f;
           hB = 232/360.f;
-          bA = 1.0f;
-          bB = 0.3f;
+          bA = 0.8f;
+          bB = 0.5f;
         }
         break;
         
         case 5: //EarlyNight
         hA = 232/360.0f;
         hB = 251/360.0f;
-        bA = 0.3f;
-        bB = 0.1f;
+        bA = 0.5f;
+        bB = 0.2f;
         break;
         
         case 6: //MidNight
@@ -161,7 +170,7 @@ class SkyNode extends Shape
         {
           hA = 251/360.0f;
           hB = hA;
-          bA = 0.1f;
+          bA = 0.2f;
           bB = 0.0;
         }
         else
@@ -186,25 +195,25 @@ class SkyNode extends Shape
           hA = 240/360.0f;
           hB = 253/360.0f;
           bA = 0.05f;
-          bB = 0.4f;
+          bB = 0.18f;
         }
         else if (relStrength < 0.86f)
         {
           hA = 253/360.0f;
           hB = hA;
-          bA = 0.4f;
-          bB = 0.6f;
+          bA = 0.18f;
+          bB = 0.3f;
           sA = 1.0f;
-          sB = 0.33f;
+          sB = 0.7f;
         }
         else
         {
           hA = 253/360.0f;
-          hB = 300/360.0f;
-          sA = 0.33f;
-          sB = 0.7f;
-          bA = 0.6f;
-          bB = 0.8f;
+          hB = 260/360.0f;
+          sA = 0.7f;
+          sB = 0.8f;
+          bA = 0.3f;
+          bB = 0.4f;
         }
         break;
         
@@ -291,7 +300,7 @@ class SkyNode extends Shape
   {
     m_Layers = new ArrayList<Layer>();
     
-    int numLayers = 10;
+    int numLayers = 6;
     
     float maxRadius = m_OuterR;
     float minRadius = m_InnerR;
