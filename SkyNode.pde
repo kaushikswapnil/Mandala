@@ -97,8 +97,22 @@ class SkyNode extends Shape
        switch(generalTime)
        {
         case 0: //Dawn
-        hA = 350/360.0f;
-        hB = 57/360.0f;
+        if (relStrength < 0.5f)
+        {
+          hA = 300/360.0f;
+          hB = 1.0f;
+          sA = 0.33f;
+          sB = 0.5f;
+          bA = 0.8f;
+          bB = 1.0f;
+        }
+        else
+        {
+          hA = 0.0f;
+          hB = 57/360.0f;
+          sA = 0.5f;
+          sB = 1.0f;
+        }
         break;
         
         case 1: //Morning
@@ -186,7 +200,7 @@ class SkyNode extends Shape
         else
         {
           hA = 253/360.0f;
-          hB = 350/360.0f;
+          hB = 300/360.0f;
           sA = 0.33f;
           sB = 0.7f;
           bA = 0.6f;
