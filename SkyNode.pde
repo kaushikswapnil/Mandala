@@ -24,8 +24,10 @@ class SkyNode extends Shape
        
        noStroke();
 
-       PVector skyCol = GetColorFor(GetGeneralTime(time), GetStrengthOfGeneralTime(time));
-       fill(skyCol.x, skyCol.y, skyCol.z);
+       //PVector skyCol = GetColorFor(GetGeneralTime(time), GetStrengthOfGeneralTime(time));
+       //fill(skyCol.x, skyCol.y, skyCol.z);
+       
+       fill(GetColorFor(GetGeneralTime(time), GetStrengthOfGeneralTime(time)));
        
        ellipse(0, 0, diameter, diameter);
      }
@@ -76,7 +78,7 @@ class SkyNode extends Shape
        return relStrength;
      }
      
-     PVector GetColorFor(int generalTime, float relStrength)
+     PVector GetColorFor_Deprecated(int generalTime, float relStrength)
      {
        PVector retColor;
        
@@ -113,6 +115,80 @@ class SkyNode extends Shape
        }
        
        return retColor;
+     }
+     
+     int GetColorFor(int generalTime, float relStrength)
+     {
+       float hA = 0.0f, hB = 0.0f;
+       float sA = 1.0f, sB = 1.0f;
+       float bA = 1.0f, bB = 1.0f;
+       
+       switch(generalTime)
+       {
+        case 0: //Dawn
+        hA = 26/360.0f;
+        hB = 57/360.0f;
+        break;
+        
+        case 1: //Morning
+        hA = 57/360.0f;
+        hB = 50/360.0f;
+        sA = 0.7f;
+        sB = 0.0f;
+        break;
+        
+        case 2: //Noon
+        hA = 180/360.0f;
+        hB = 183/360.0f;
+        sA = 0.0f;
+        sB = 1.0f;
+        break;
+        
+        case 3: //Evening
+        hA = 183/360.0f;
+        hB = 257/360.0f;
+        break;
+        
+        case 4: //Dusk
+        if (relStrength < 0.5f)
+        {
+          hA = 257/360.0f;
+          hB = 347/360.0f;
+        }
+        else
+        {
+          hA = 347/360.0f;
+          hB = 232/360.f;
+          bA = 1.0f;
+          bB = 0.3f;
+        }
+        break;
+        
+        case 5: //Night
+        if (relStrength < 0.33f)
+        {
+          bA = 0.3f;
+          bB = 0.0f;
+        }
+        else
+        {
+          hA = 232/360.0f;
+          hB = 360.0f;
+          bA = 0.0f;
+          bB = 1.0f;
+        }
+        
+        break;
+        
+        default:
+        break;
+       }
+       
+       float h = lerp(hA, hB, relStrength);
+       float s = lerp(sA, sB, relStrength);
+       float b = lerp(bA, bB, relStrength);
+       
+       return HSBtoRGB(h, s, b);
      }
   }
   
@@ -187,7 +263,7 @@ class SkyNode extends Shape
   {
     m_Layers = new ArrayList<Layer>();
     
-    int numLayers = 3;
+    int numLayers = 8;
     
     float maxRadius = m_OuterR;
     float minRadius = m_InnerR;
