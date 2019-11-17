@@ -26,6 +26,20 @@ void GenerateMandala()
 {
   g_Mandala = new ArrayList<Pattern>();
   
+  SunNode sNode = new SunNode(60);
+  Pattern p = new Pattern(sNode);
+  p.m_BorderColor = new PVector(255, 103, 0);
+  g_Mandala.add(p);
+  
+  Shape skyN = new SkyNode(p.m_OuterRadius, p.m_OuterRadius+150.0f, 500);
+  Pattern p1 = new Pattern(skyN);
+  g_Mandala.add(p1);
+}
+
+void GenerateMandala1()
+{
+  g_Mandala = new ArrayList<Pattern>();
+  
   SunNode sNode = new SunNode(80);
   Pattern p = new Pattern(sNode);
   p.m_BorderColor = new PVector(255, 103, 0);
@@ -39,10 +53,10 @@ void GenerateMandala()
   g_Mandala.add(p1);
   
   ArrayList<IEffect> effects = new ArrayList<IEffect>();
-  effects.add(new RotateEffect(-TWO_PI, 800));
+  //effects.add(new RotateEffect(-TWO_PI, 800));
   //effects.add(new PulseScaleEffect(3, 80));
   
-  effects.get(0).SetLoopable(true);
+  //effects.get(0).SetLoopable(true);
   //effects.get(1).SetLoopable(true);
   
   Shape sqNode = new RectNode(15, 15, true, new PVector(255, 80, 0), true, new PVector(150, 180, 210), new ArrayList<IEffect>());
