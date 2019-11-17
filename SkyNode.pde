@@ -84,8 +84,8 @@ class SkyNode extends Shape
      float GetStrengthOfGeneralTime(float time)
      {
        float gradientRange = 1.0f/GeneralTime_Count;
-       float relStrength = time % gradientRange;
-       return relStrength;
+       float relStrength = map(time % gradientRange, 0, gradientRange, 0.0f, 1.0f);
+       return relStrength; //<>//
      }
 
      int GetColorFor(int generalTime, float relStrength)
@@ -97,7 +97,7 @@ class SkyNode extends Shape
        switch(generalTime)
        {
         case 0: //Dawn
-        hA = 1/360.0f;
+        hA = 350/360.0f;
         hB = 57/360.0f;
         break;
         
@@ -172,14 +172,14 @@ class SkyNode extends Shape
           hA = 240/360.0f;
           hB = 253/360.0f;
           bA = 0.05f;
-          bB = 0.8f;
+          bB = 0.4f;
         }
         else if (relStrength < 0.86f)
         {
           hA = 253/360.0f;
           hB = hA;
-          bA = 0.8f;
-          bB = 1.0f;
+          bA = 0.4f;
+          bB = 0.6f;
           sA = 1.0f;
           sB = 0.33f;
         }
@@ -188,7 +188,9 @@ class SkyNode extends Shape
           hA = 253/360.0f;
           hB = 350/360.0f;
           sA = 0.33f;
-          sB = 1.0f;
+          sB = 0.7f;
+          bA = 0.6f;
+          bB = 0.8f;
         }
         break;
         
@@ -261,8 +263,8 @@ class SkyNode extends Shape
     
     float curTime = GetTime();
     float layerTime = curTime;
-    float layerTimeIncrement = 1.0f/(GeneralTime_Count*m_Layers.size()/5);
-    for (Layer layer : m_Layers) //<>//
+    float layerTimeIncrement = 1.0f/(GeneralTime_Count*m_Layers.size()/2);
+    for (Layer layer : m_Layers)
     {
        layer.Display(layerTime); 
        layerTime = (layerTime+layerTimeIncrement)%1.0f;
@@ -275,7 +277,7 @@ class SkyNode extends Shape
   {
     m_Layers = new ArrayList<Layer>();
     
-    int numLayers = 12;
+    int numLayers = 10;
     
     float maxRadius = m_OuterR;
     float minRadius = m_InnerR;
@@ -291,13 +293,13 @@ class SkyNode extends Shape
      float outerR = lastInnerR;
      float innerR = lastInnerR - radiusDecrement;
      lastInnerR = innerR;
-     m_Layers.add(new Layer(innerR, outerR));  //<>//
+     m_Layers.add(new Layer(innerR, outerR)); 
     }
   }
   
   float GetTime()
   {
     float time = (((float)(frameCount-m_CycleStart)/m_CycleLength) + m_InitialTime)%1.0f;
-    return time; //<>//
+    return time;
   }
 }

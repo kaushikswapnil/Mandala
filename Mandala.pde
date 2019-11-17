@@ -53,7 +53,7 @@ void GenerateMandala()
   Pattern p3 = new Pattern(trNode, p2.m_OuterRadius, new PVector(255, 215, 0), new PVector(250, 255, 255), effects);
   g_Mandala.add(p3);
   
-  Shape skyN = new SkyNode(p3.m_OuterRadius, p3.m_OuterRadius+100.0f, 500);
+  Shape skyN = new SkyNode(p3.m_OuterRadius, p3.m_OuterRadius+150.0f, 500);
   Pattern p4 = new Pattern(skyN);
   g_Mandala.add(p4);
 }
