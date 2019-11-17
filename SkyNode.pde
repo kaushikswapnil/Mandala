@@ -5,8 +5,10 @@ class SkyNode extends Shape
   int GeneralTime_Noon = 2;
   int GeneralTime_Evening = 3;
   int GeneralTime_Dusk = 4;
-  int GeneralTime_Night = 5;
-  int GeneralTime_Count = 6;
+  int GeneralTime_EarlyNight = 5;
+  int GeneralTime_MidNight = 6;
+  int GeneralTime_LateNight = 7;
+  int GeneralTime_Count = 8;
   
   class Layer
   {
@@ -63,9 +65,17 @@ class SkyNode extends Shape
       {
        retVal = 4; //Dusk 
       }
+      else if (time < 6*increment)
+      {
+       retVal = 5; //EarlyNight 
+      }
+      else if (time < 7*increment)
+      {
+       retVal = 6; //MidNight 
+      }
       else
       {
-       retVal = 5; //Night 
+       retVal = 7; //LateNight 
       }
       
       return retVal;
@@ -77,46 +87,7 @@ class SkyNode extends Shape
        float relStrength = time % gradientRange;
        return relStrength;
      }
-     
-     PVector GetColorFor_Deprecated(int generalTime, float relStrength)
-     {
-       PVector retColor;
-       
-       switch(generalTime)
-       {
-        case 0: //Dawn
-        retColor = new PVector(255, 153, 204);
-        break;
-        
-        case 1: //Morning
-        retColor = new PVector(0, 255, 255);
-        break;
-        
-        case 2: //Noon
-        retColor = new PVector(255, 255, 102);
-        break;
-        
-        case 3: //Evening
-        retColor = new PVector(102, 178, 255);
-        break;
-        
-        case 4: //Dusk
-        retColor = new PVector(255, 128, 0);
-        break;
-        
-        case 5: //Night        
-        retColor = new PVector(0, 0, 102);
-        break;
-        
-        default:
-        
-        retColor = new PVector(0, 0, 0);
-        break;
-       }
-       
-       return retColor;
-     }
-     
+
      int GetColorFor(int generalTime, float relStrength)
      {
        float hA = 0.0f, hB = 0.0f;
@@ -126,7 +97,7 @@ class SkyNode extends Shape
        switch(generalTime)
        {
         case 0: //Dawn
-        hA = 26/360.0f;
+        hA = 1/360.0f;
         hB = 57/360.0f;
         break;
         
@@ -164,20 +135,61 @@ class SkyNode extends Shape
         }
         break;
         
-        case 5: //Night
-        if (relStrength < 0.33f)
+        case 5: //EarlyNight
+        hA = 232/360.0f;
+        hB = 251/360.0f;
+        bA = 0.3f;
+        bB = 0.1f;
+        break;
+        
+        case 6: //MidNight
+        if (relStrength < 0.5f)
         {
-          bA = 0.3f;
-          bB = 0.0f;
+          hA = 251/360.0f;
+          hB = hA;
+          bA = 0.1f;
+          bB = 0.0;
         }
         else
         {
-          hA = 232/360.0f;
-          hB = 360.0f;
+          hA = 251/360.0f;
+          hB = 240/360.0f;
           bA = 0.0f;
-          bB = 1.0f;
+          bB = 0.1f;
         }
+        break;
         
+        case 7: //LateNight
+        if (relStrength < 0.33f)
+        {
+          hA = 240/360.0f;
+          hB = 240/360.0f;
+          bA = 0.0f;
+          bB = 0.05f;
+        }
+        else if (relStrength < 0.66f)
+        {
+          hA = 240/360.0f;
+          hB = 253/360.0f;
+          bA = 0.05f;
+          bB = 0.8f;
+        }
+        else if (relStrength < 0.86f)
+        {
+          hA = 253/360.0f;
+          hB = hA;
+          bA = 0.8f;
+          bB = 1.0f;
+          sA = 1.0f;
+          sB = 0.33f;
+        }
+        else
+        {
+          hA = 253/360.0f;
+          hB = 350/360.0f;
+          sA = 0.33f;
+          sB = 1.0f;
+        }
         break;
         
         default:
@@ -249,7 +261,7 @@ class SkyNode extends Shape
     
     float curTime = GetTime();
     float layerTime = curTime;
-    float layerTimeIncrement = 1.0f/(GeneralTime_Count*m_Layers.size());
+    float layerTimeIncrement = 1.0f/(GeneralTime_Count*m_Layers.size()/5);
     for (Layer layer : m_Layers) //<>//
     {
        layer.Display(layerTime); 
@@ -263,7 +275,7 @@ class SkyNode extends Shape
   {
     m_Layers = new ArrayList<Layer>();
     
-    int numLayers = 8;
+    int numLayers = 12;
     
     float maxRadius = m_OuterR;
     float minRadius = m_InnerR;
