@@ -111,7 +111,7 @@ class SkyNode extends Shape
           hA = 330/360.0f;
           hB = 1.0f;
           sA = 0.9f;
-          sB = 0.1f;
+          sB = 0.8f;
           bA = 0.8f;
           bB = 1.0f;
         }
@@ -138,13 +138,13 @@ class SkyNode extends Shape
         
         case 3: //Evening
         hA = 183/360.0f;
-        hB = 257/360.0f;
+        hB = 200/360.0f;
         break;
         
         case 4: //Dusk
         if (relStrength < 0.5f)
         {
-          hA = 257/360.0f;
+          hA = 200/360.0f;
           hB = 290/360.0f;
           bA = 1.0;
           bB = 0.8f;
