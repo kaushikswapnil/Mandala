@@ -88,6 +88,12 @@ class IEffect
      IGraphicNode gNode = (IGraphicNode)(node);
      Apply(gNode);
    }
+   
+   void Apply(PShapeContainerNode node)
+   {
+     IGraphicNode gNode = (IGraphicNode)(node);
+     Apply(gNode);
+   }
 }
 
 class ScaleEffect extends IEffect
@@ -118,6 +124,14 @@ class ScaleEffect extends IEffect
      
      float interpolatedScale = GetInterpolatedScale();
      node.m_Scale = interpolatedScale;
+   }
+   
+   void Apply(PShapeContainerNode node)
+   {
+     IGraphicNode gNode = (IGraphicNode)(node);
+     Apply(gNode);
+     
+     node.CreateShape();
    }
 }
 

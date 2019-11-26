@@ -34,4 +34,9 @@ class PShapeContainerNode extends SimpleShape
   {
      return new PShapeContainerNode(m_Shape); 
   }
+  
+  void ApplyEffect(IEffect effect)
+  {
+    effect.Apply(this);
+  }
 }

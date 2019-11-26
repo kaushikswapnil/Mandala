@@ -55,6 +55,7 @@ class StarNode extends PShapeContainerNode
   Shape Copy()
   {
     StarNode node = new StarNode(m_NumPoints, m_Width/2, m_InnerPointRadiiRatio, m_FillColor, m_StrokeColor);
+    node.m_Effects = m_Effects;
     return node;
   }
 }
