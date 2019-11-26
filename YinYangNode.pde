@@ -58,6 +58,7 @@ class YinYangNode extends Shape
   Shape Copy()
   {
     YinYangNode node = new YinYangNode(m_Width/2, m_Color1, m_BorderOffset);
+    node.m_Effects = m_Effects;
     return node;
   }
 }

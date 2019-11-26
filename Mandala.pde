@@ -39,13 +39,15 @@ void GenerateMandala()
   Pattern p1 = new Pattern(skyN);
   g_Mandala.add(p1);
   
-  Shape yyNode = new YinYangNode(30.0f, new PVector(0, 0, 0), 2.0f);
+  Shape yyNode = new YinYangNode(30.0f, new PVector(0, 0, 0), 10.0f);
+  yyNode.m_Effects.add(new RotateEffect(-TWO_PI*2, 800));
+  yyNode.m_Effects.get(0).SetLoopable(true);
   Pattern p2 = new Pattern(yyNode, p1.m_OuterRadius, new PVector(255, 255, 255), new PVector(0, 0, 0));
-  p2.m_Effects.add(new RotateEffect(-TWO_PI*2, 800));
-  p2.m_Effects.get(0).SetLoopable(true);
+  //p2.m_Effects.add(new RotateEffect(-TWO_PI*2, 800));
+  //p2.m_Effects.get(0).SetLoopable(true);
   g_Mandala.add(p2);
   
-  Shape starNode = new StarNode(10, 40.0f, 0.3f, new PVector(255, 255, 255), new PVector(0, 0, 0));
+  Shape starNode = new StarNode(10, 40.0f, 0.3f, new PVector(255, 255, 255), new PVector(255, 255, 0));
   starNode.m_Effects.add(new PulseScaleEffect(0.5, 80));
   starNode.m_Effects.get(0).SetLoopable(true);
   Pattern p3 = new Pattern(starNode, p2.m_OuterRadius, new PVector(180, 180, 180), new PVector(0, 0, 0));
