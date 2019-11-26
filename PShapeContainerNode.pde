@@ -1,37 +1,37 @@
 class PShapeContainerNode extends SimpleShape
 {
-  PShape m_PShape;
+  PShape m_Shape;
   
   PShapeContainerNode()
   {
-     super(0, 0, false, false);
-     m_PShape = null;
+     super(0, 0, true, true);
+     m_Shape = null;
   }
   
   PShapeContainerNode(PShape shape)
   {
     super(shape.width, shape.height, true, true);
-    m_PShape = shape;
+    m_Shape = shape;
   }
   
-  void CalculatePShape()
+  void CreateShape()
   {
     
   }
   
   void Display()
   {
-    super.Display();
-    shape(m_PShape, m_Position.x, m_Position.y, m_Width, m_Height);
+    pushMatrix();
+    
+    translate(m_Position.x, m_Position.y);
+    rotate(m_Angle);
+    shape(m_Shape, 0, 0);
+    
+    popMatrix();
   }
   
   Shape Copy()
   {
-     return new PShapeContainerNode(m_PShape); 
+     return new PShapeContainerNode(m_Shape); 
   }
-}
-
-class PShapeTriangle extends PShapeContainerNode
-{
-  
 }

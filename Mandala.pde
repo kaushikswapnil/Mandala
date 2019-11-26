@@ -1,9 +1,13 @@
 ArrayList<Pattern> g_Mandala;
 
 PVector g_Center;
+
+PVector g_White = new PVector(255, 255, 255);
+PVector g_Black = new PVector(0, 0, 0);
+
 void setup()
 {
-  size(800, 800);
+  size(1200, 1200);
   
   g_Center = new PVector(width/2, height/2);
 
@@ -35,11 +39,17 @@ void GenerateMandala()
   Pattern p1 = new Pattern(skyN);
   g_Mandala.add(p1);
   
-  Shape yyNode = new YinYangNode(50.0f, new PVector(0, 0, 0), 2.0f);
+  Shape yyNode = new YinYangNode(30.0f, new PVector(0, 0, 0), 2.0f);
   Pattern p2 = new Pattern(yyNode, p1.m_OuterRadius, new PVector(255, 255, 255), new PVector(0, 0, 0));
   p2.m_Effects.add(new RotateEffect(TWO_PI*2, 800));
   p2.m_Effects.get(0).SetLoopable(true);
   g_Mandala.add(p2);
+  
+  Shape starNode = new StarNode(10, 40.0f, 0.3f, new PVector(255, 255, 255), new PVector(0, 0, 0));
+  Pattern p3 = new Pattern(starNode, p2.m_OuterRadius, new PVector(180, 180, 180), new PVector(0, 0, 0));
+  p3.m_Effects.add(new RotateEffect(TWO_PI*2, 800));
+  p3.m_Effects.get(0).SetLoopable(true);
+  g_Mandala.add(p3);
 }
 
 void GenerateMandala1()
