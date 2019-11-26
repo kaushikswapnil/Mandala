@@ -4,10 +4,11 @@ PVector g_Center;
 
 PVector g_White = new PVector(255, 255, 255);
 PVector g_Black = new PVector(0, 0, 0);
+PVector g_NullVector = g_Black.copy();
 
 void setup()
 {
-  size(1200, 1200);
+  size(1200, 1000);
   
   g_Center = new PVector(width/2, height/2);
 
@@ -35,11 +36,11 @@ void GenerateMandala()
   p.m_BorderColor = new PVector(255, 103, 0);
   g_Mandala.add(p);
   
-  Shape skyN = new SkyNode(p.m_OuterRadius, p.m_OuterRadius+150.0f, 500);
+  Shape skyN = new SkyNode(p.m_OuterRadius, p.m_OuterRadius+100.0f, 500);
   Pattern p1 = new Pattern(skyN);
   g_Mandala.add(p1);
   
-  Shape yyNode = new YinYangNode(30.0f, new PVector(0, 0, 0), 10.0f);
+  Shape yyNode = new YinYangNode(20.0f, new PVector(0, 0, 0), 5.0f);
   yyNode.m_Effects.add(new RotateEffect(-TWO_PI*2, 800));
   yyNode.m_Effects.get(0).SetLoopable(true);
   Pattern p2 = new Pattern(yyNode, p1.m_OuterRadius, new PVector(255, 255, 255), new PVector(0, 0, 0));
@@ -47,13 +48,23 @@ void GenerateMandala()
   //p2.m_Effects.get(0).SetLoopable(true);
   g_Mandala.add(p2);
   
-  Shape starNode = new StarNode(10, 40.0f, 0.3f, new PVector(255, 255, 255), new PVector(255, 255, 0));
+  Shape starNode = new StarNode(10, 20.0f, 0.3f, g_Black, g_White);
   starNode.m_Effects.add(new PulseScaleEffect(0.5, 80));
   starNode.m_Effects.get(0).SetLoopable(true);
   Pattern p3 = new Pattern(starNode, p2.m_OuterRadius, new PVector(180, 180, 180), new PVector(0, 0, 0));
   p3.m_Effects.add(new RotateEffect(TWO_PI*2, 800));
   p3.m_Effects.get(0).SetLoopable(true);
   g_Mandala.add(p3);
+  
+  Shape recStarNode = new RecursiveStarMandala(4, 6, 8.0f, 0.5f, 10.0f);
+  recStarNode.m_Effects.add(new RotateEffect(-TWO_PI*2, 800));
+  recStarNode.m_Effects.get(0).SetLoopable(true);
+  Pattern p4 = new Pattern(recStarNode, p3.m_OuterRadius, new PVector(180, 180, 180), new PVector(0, 0, 0));
+  g_Mandala.add(p4);
+  
+  Shape recStarNodeOuter = new RecursiveStarMandala(4, 6, p4.m_OuterRadius, 0.5f, 50.0f);
+  Pattern p5 = new Pattern(recStarNodeOuter);
+  //g_Mandala.add(p5);
 }
 
 void GenerateMandala1()
